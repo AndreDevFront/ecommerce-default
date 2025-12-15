@@ -1,0 +1,29 @@
+@reference "../globals.css";
+
+.mainContainer {
+  @apply min-h-screen bg-gray-50 flex flex-col items-center;
+}
+
+.card {
+  @apply bg-white p-8 rounded-xl shadow-lg border border-gray-200;
+}
+
+.contentWrapper {
+  @apply w-full max-w-7xl px-6 py-10;
+}
+
+.title {
+  @apply text-3xl font-bold text-gray-900 mb-2;
+}
+
+.subtitle {
+  @apply mb-8 text-gray-600;
+}
+
+.productsGrid {
+  @apply grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4;
+}
+
+.emptyState {
+  @apply text-center py-20 text-gray-500;
+}

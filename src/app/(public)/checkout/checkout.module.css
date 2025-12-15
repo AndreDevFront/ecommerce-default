@@ -1,0 +1,77 @@
+@reference "../../../app/globals.css";
+
+.container {
+  @apply container mx-auto px-4 py-8;
+}
+
+.title {
+  @apply text-3xl font-bold mb-8 text-gray-900;
+}
+
+.formGrid {
+  @apply grid grid-cols-1 lg:grid-cols-3 gap-8;
+}
+
+.formColumn {
+  @apply lg:col-span-2 space-y-6;
+}
+
+.cardContent {
+  @apply space-y-4;
+}
+
+.inputGroup {
+  @apply space-y-2;
+}
+
+.errorText {
+  @apply text-red-500 text-sm;
+}
+
+.twoCols {
+  @apply grid grid-cols-2 gap-4;
+}
+
+.streetGrid {
+  @apply grid grid-cols-[1fr_100px] gap-4;
+}
+
+.radioGroup {
+  @apply flex flex-col space-y-3;
+}
+
+.radioItem {
+  @apply flex items-center space-x-3 space-y-0;
+}
+
+.radioLabel {
+  @apply font-normal cursor-pointer;
+}
+
+.summaryColumn {
+  @apply lg:col-span-1;
+}
+
+.summaryCard {
+  @apply sticky top-4;
+}
+
+.itemsList {
+  @apply space-y-3 max-h-[300px] overflow-auto pr-2;
+}
+
+.itemRow {
+  @apply flex justify-between text-sm;
+}
+
+.itemPrice {
+  @apply font-medium text-gray-600;
+}
+
+.totalRow {
+  @apply flex justify-between text-lg font-bold;
+}
+
+.submitButton {
+  @apply w-full mt-4;
+}

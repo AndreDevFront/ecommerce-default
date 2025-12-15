@@ -1,0 +1,28 @@
+@reference "../app/globals.css";
+
+.header {
+  @apply sticky top-0 z-50 w-full border-b border-gray-100 bg-white/80 backdrop-blur-md;
+}
+
+.container {
+  @apply mx-auto flex h-16 max-w-7xl items-center justify-between px-6;
+}
+
+.logo {
+  @apply text-xl font-bold tracking-tight text-gray-900 hover:text-blue-600 transition-colors;
+}
+
+.nav {
+  @apply hidden md:flex items-center gap-6 text-sm font-medium text-gray-600;
+}
+
+.navLink {
+  @apply hover:text-blue-600 transition-colors;
+}
+
+.actions {
+  @apply flex items-center gap-4;
+}
+.actions button {
+  @apply cursor-pointer;
+}

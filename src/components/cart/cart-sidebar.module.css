@@ -1,0 +1,81 @@
+@reference "../../app/globals.css";
+
+.scrollArea {
+  @apply h-full pr-4;
+}
+
+.item {
+  @apply flex gap-4 py-4 px-3 border-b border-gray-100;
+}
+
+.imageContainer {
+  @apply h-20 w-20 rounded-md overflow-hidden bg-gray-50 shrink-0 border border-gray-200 relative;
+}
+
+.imageLink {
+  @apply block w-full h-full relative;
+}
+
+.image {
+  @apply object-cover;
+}
+
+.itemDetails {
+  @apply flex flex-1 flex-col justify-between;
+}
+
+.itemHeader {
+  @apply flex justify-between items-start gap-2;
+}
+
+.itemTitle {
+  @apply text-sm font-medium text-gray-900 line-clamp-2;
+}
+
+.removeButton {
+  @apply text-gray-400 hover:text-red-500 transition-colors p-1 cursor-pointer;
+}
+
+.itemFooter {
+  @apply flex justify-between items-center mt-2;
+}
+
+.price {
+  @apply text-sm font-semibold text-gray-900;
+}
+
+.quantityControls {
+  @apply flex items-center border border-gray-200 rounded-md;
+}
+
+.quantityBtn {
+  @apply h-7 w-7 flex items-center justify-center text-gray-600 hover:bg-gray-100 text-xs transition-colors;
+}
+
+.quantityValue {
+  @apply w-8 text-center text-xs font-medium text-gray-900;
+}
+
+.footer {
+  @apply border-t border-gray-100 pt-6 pb-3 px-3 mt-auto space-y-4;
+}
+
+.totalRow {
+  @apply flex items-center justify-between text-base font-medium text-gray-900;
+}
+
+.checkoutBtn {
+  @apply w-full cursor-pointer;
+}
+
+.emptyState {
+  @apply flex flex-col items-center justify-center h-[50vh] text-center space-y-4;
+}
+
+.emptyIcon {
+  @apply h-12 w-12 text-gray-300;
+}
+
+.emptyText {
+  @apply text-gray-500;
+}

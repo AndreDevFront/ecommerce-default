@@ -1,0 +1,53 @@
+@reference "../app/globals.css";
+
+.field {
+  @apply space-y-2;
+}
+
+.label {
+  @apply text-sm font-medium text-gray-700 block;
+}
+
+.uploadArea {
+  @apply mt-2 flex justify-center rounded-lg border border-dashed border-gray-300 px-6 py-10 hover:bg-gray-50 transition-colors cursor-pointer relative;
+}
+
+.uploadContent {
+  @apply text-center w-full;
+}
+
+.uploadIcon {
+  @apply mx-auto h-12 w-12 text-gray-300;
+}
+
+.uploadTextContainer {
+  @apply mt-2 flex text-sm text-gray-600 justify-center;
+}
+
+.uploadLink {
+  @apply relative rounded-md bg-white font-medium text-blue-600 focus-within:outline-none hover:text-blue-500;
+}
+
+.helperText {
+  @apply text-xs text-gray-500 mt-1;
+}
+
+.hiddenInput {
+  @apply hidden;
+}
+
+.previewContainer {
+  @apply relative w-40 h-40 mx-auto overflow-hidden rounded-lg border border-gray-200;
+}
+
+.previewImage {
+  @apply w-full h-full object-cover;
+}
+
+.removeButton {
+  @apply absolute top-2 right-2 z-10 p-1 rounded-full bg-white/80 text-red-600 hover:bg-white transition-colors;
+}
+
+.removeIcon {
+  @apply h-4 w-4;
+}

@@ -1,0 +1,22 @@
+/* inserir src\app\globals.css*/
+@reference "../../../../../app/globals.css";
+
+.container {
+  @apply max-w-4xl mx-auto space-y-6;
+}
+
+.header {
+  @apply flex items-center justify-between;
+}
+
+.title {
+  @apply text-2xl font-bold text-gray-900;
+}
+
+.subtitle {
+  @apply text-sm text-gray-500;
+}
+
+.backLink {
+  @apply inline-flex items-center text-sm text-gray-500 hover:text-blue-600 transition-colors;
+}

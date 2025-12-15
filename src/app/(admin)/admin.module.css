@@ -1,0 +1,21 @@
+@reference "../../app/globals.css";
+
+.layoutContainer {
+  @apply flex min-h-screen bg-gray-100;
+}
+
+.sidebar {
+  @apply fixed inset-y-0 left-0 w-64 bg-white border-r border-gray-200 hidden md:flex flex-col;
+}
+
+.sidebarHeader {
+  @apply h-16 flex items-center justify-center border-b border-gray-200 font-bold text-xl text-gray-900;
+}
+
+.nav {
+  @apply flex-1 p-4 space-y-1;
+}
+
+.mainContent {
+  @apply flex-1 md:ml-64 p-8;
+}

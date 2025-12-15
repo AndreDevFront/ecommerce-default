@@ -1,3 +1,4 @@
+import { Toaster } from "@/components/ui/sonner";
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
@@ -28,6 +29,17 @@ export default function RootLayout({
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
         {children}
+        <Toaster
+          richColors
+          position="top-center"
+          toastOptions={{
+            classNames: {
+              toast: "justify-center",
+              title: "text-center",
+              description: "text-center",
+            },
+          }}
+        />
       </body>
     </html>
   );

@@ -1,0 +1,21 @@
+@reference "../../../globals.css";
+
+.container {
+  @apply space-y-6;
+}
+
+.title {
+  @apply text-2xl font-bold text-gray-900;
+}
+
+.welcomeCard {
+  @apply rounded-xl border border-dashed border-gray-300 bg-white p-10 text-center;
+}
+
+.welcomeText {
+  @apply text-gray-500;
+}
+
+.subText {
+  @apply mt-2 text-sm text-gray-400;
+}

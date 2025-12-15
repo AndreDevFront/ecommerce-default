@@ -1,0 +1,49 @@
+@reference "../../app/globals.css";
+
+.form {
+  @apply space-y-8 bg-white p-8 rounded-lg border border-gray-200 shadow-sm;
+}
+
+.sectionTitle {
+  @apply text-lg font-semibold text-gray-900 border-b border-gray-100 pb-2 mb-4;
+}
+
+.gridTwoCols {
+  @apply grid grid-cols-1 gap-6 md:grid-cols-2;
+}
+
+.gridThreeCols {
+  @apply grid grid-cols-1 gap-4 md:grid-cols-3;
+}
+
+.field {
+  @apply space-y-2;
+}
+
+.label {
+  @apply text-sm font-medium text-gray-700 block;
+}
+
+.error {
+  @apply text-xs text-red-500 font-medium mt-1 block;
+}
+
+.uploadArea {
+  @apply mt-2 flex justify-center rounded-lg border border-dashed border-gray-300 px-6 py-10 hover:bg-gray-50 transition-colors cursor-pointer relative;
+}
+
+.previewContainer {
+  @apply relative w-40 h-40 mx-auto overflow-hidden rounded-lg border border-gray-200;
+}
+
+.previewImage {
+  @apply w-full h-full object-cover;
+}
+
+.actions {
+  @apply flex items-center justify-end gap-4 pt-6 border-t border-gray-100;
+}
+
+.actions button {
+  @apply cursor-pointer;
+}

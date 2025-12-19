@@ -2,15 +2,16 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
 import { formatPrice } from "@/lib/formatters";
-import { CartItem } from "@/lib/store"; // Certifique-se de exportar CartItem da store
+import { CartItem } from "@/lib/store";
 import styles from "../checkout.module.css";
 
 interface Props {
   items: CartItem[];
   total: number;
+  isSubmitting: boolean;
 }
 
-export function OrderSummary({ items, total }: Props) {
+export function OrderSummary({ items, total, isSubmitting }: Props) {
   return (
     <Card className={styles.summaryCard}>
       <CardHeader>
@@ -37,8 +38,13 @@ export function OrderSummary({ items, total }: Props) {
           <span>{formatPrice(total)}</span>
         </div>
 
-        <Button type="submit" size="lg" className={styles.submitButton}>
-          Confirmar Pedido
+        <Button
+          type="submit"
+          size="lg"
+          className={styles.submitButton}
+          disabled={isSubmitting}
+        >
+          {isSubmitting ? "Enviando..." : "Confirmar Pedido"}
         </Button>
       </CardContent>
     </Card>

@@ -1,0 +1,26 @@
+@reference "../app/globals.css";
+
+.form {
+  @apply space-y-4 pt-4;
+}
+
+.buttonsContainer {
+  @apply flex gap-3 mt-6;
+}
+
+.cancelButton {
+  @apply flex-1 py-2 bg-gray-100 hover:bg-gray-200 rounded text-gray-700 font-medium transition-colors cursor-pointer;
+}
+
+.submitButton {
+  @apply flex-1 py-2 bg-black hover:bg-gray-800 text-white rounded font-bold transition-colors;
+  @apply disabled:opacity-50 disabled:cursor-not-allowed;
+}
+
+.errorMessage {
+  @apply text-red-500 text-sm font-medium;
+}
+
+.dialogContent {
+  @apply sm:max-w-md;
+}

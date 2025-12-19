@@ -1,0 +1,42 @@
+@reference "../../../../../app/globals.css";
+
+.container {
+  @apply container mx-auto px-4 py-20;
+  @apply flex flex-col items-center justify-center text-center;
+  @apply space-y-6;
+  @apply min-h-[60vh];
+}
+
+.iconWrapper {
+  @apply p-4 rounded-full mb-2;
+  @apply flex items-center justify-center;
+  @apply animate-in zoom-in duration-500;
+}
+
+.successWrapper {
+  @apply bg-green-100 text-green-600;
+}
+
+.errorWrapper {
+  @apply bg-red-100 text-red-600;
+}
+
+.icon {
+  @apply h-16 w-16;
+}
+
+.title {
+  @apply text-3xl font-bold text-gray-900;
+}
+
+.description {
+  @apply text-gray-600 max-w-md leading-relaxed;
+}
+
+.orderId {
+  @apply font-mono font-bold text-gray-900 bg-gray-100 px-2 py-0.5 rounded text-sm;
+}
+
+.actions {
+  @apply flex gap-4 pt-4;
+}

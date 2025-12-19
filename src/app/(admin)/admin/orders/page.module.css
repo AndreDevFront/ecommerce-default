@@ -1,0 +1,69 @@
+@reference "../../../globals.css";
+
+.container {
+  @apply container mx-auto px-4 py-10;
+}
+
+.header {
+  @apply flex justify-between items-center mb-8;
+}
+
+.title {
+  @apply text-3xl font-bold text-gray-900;
+}
+
+.tableWrapper {
+  @apply rounded-xl border border-gray-800 overflow-hidden shadow-2xl;
+  @apply bg-white;
+}
+
+.table {
+  @apply w-full text-sm text-left text-gray-900;
+}
+
+.thead {
+  @apply bg-slate-950 text-gray-200 uppercase text-xs font-semibold tracking-wider;
+  @apply border-b border-gray-800;
+}
+
+.th {
+  @apply px-6 py-4;
+}
+
+.row {
+  @apply border-b border-gray-800 transition-all duration-200;
+  @apply hover:bg-slate-200;
+}
+
+.cell {
+  @apply px-6 py-4 align-middle;
+}
+
+.customerName {
+  @apply font-medium text-slate-900 block mb-0.5;
+}
+
+.customerEmail {
+  @apply text-xs text-slate-900;
+}
+
+.date {
+  @apply text-slate-900 whitespace-nowrap;
+}
+
+.total {
+  @apply font-bold text-green-700 text-base;
+}
+
+.statusBadge {
+  @apply inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium;
+  @apply bg-slate-800 text-gray-300 border border-gray-700;
+}
+
+.paymentBadge {
+  @apply inline-flex items-center gap-1.5 px-2 py-1 rounded text-xs font-medium bg-slate-800 text-gray-300 border border-gray-700;
+}
+
+.emptyState {
+  @apply text-center py-20 text-gray-500;
+}

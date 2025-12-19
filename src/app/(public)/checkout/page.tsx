@@ -1,5 +1,6 @@
 "use client";
 
+import { PaymentModal } from "@/components/PaymentModal";
 import styles from "./checkout.module.css";
 import { AddressForm } from "./components/address-form";
 import { OrderSummary } from "./components/order-summary";
@@ -8,7 +9,18 @@ import { PersonalDataForm } from "./components/personal-data-form";
 import { useCheckout } from "./hooks/use-checkout";
 
 export default function CheckoutPage() {
-  const { form, items, total, onSubmit } = useCheckout();
+  const {
+    form,
+    items,
+    total,
+    onSubmit,
+    isSubmitting,
+    clientSecret,
+    orderId,
+    resetPayment,
+  } = useCheckout();
+
+  const isModalOpen = !!clientSecret;
 
   if (items.length === 0) return null;
 
@@ -24,9 +36,22 @@ export default function CheckoutPage() {
         </div>
 
         <div className={styles.summaryColumn}>
-          <OrderSummary items={items} total={total()} />
+          <OrderSummary
+            items={items}
+            total={total()}
+            isSubmitting={isSubmitting}
+          />
         </div>
       </form>
+
+      <PaymentModal
+        isOpen={isModalOpen}
+        clientSecret={clientSecret}
+        orderId={orderId}
+        onClose={(isOpen) => {
+          if (!isOpen) resetPayment();
+        }}
+      />
     </main>
   );
 }

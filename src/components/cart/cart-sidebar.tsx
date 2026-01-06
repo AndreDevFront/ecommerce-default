@@ -1,8 +1,5 @@
 "use client";
 
-import { Minus, Plus, ShoppingBag, Trash2 } from "lucide-react";
-import Image from "next/image";
-
 import { Button, buttonVariants } from "@/components/ui/button";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import {
@@ -15,6 +12,8 @@ import {
   SheetTrigger,
 } from "@/components/ui/sheet";
 import { useCartStore } from "@/lib/store";
+import { Minus, Plus, ShoppingBag, Trash2 } from "lucide-react";
+import Image from "next/image";
 
 import { formatPrice } from "@/lib/formatters";
 import styles from "./cart-sidebar.module.css";
@@ -106,6 +105,19 @@ export function CartSidebar() {
                         <button
                           onClick={() => updateQuantity(item.id, "increase")}
                           className={styles.quantityBtn}
+                          disabled={item.quantity >= item.stock}
+                          title={
+                            item.quantity >= item.stock
+                              ? "Estoque máximo atingido"
+                              : "Adicionar mais"
+                          }
+                          style={{
+                            opacity: item.quantity >= item.stock ? 0.5 : 1,
+                            cursor:
+                              item.quantity >= item.stock
+                                ? "not-allowed"
+                                : "pointer",
+                          }}
                         >
                           <Plus size={12} />
                         </button>

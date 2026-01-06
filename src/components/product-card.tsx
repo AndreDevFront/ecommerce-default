@@ -16,6 +16,15 @@ interface ProductCardProps {
 
 export function ProductCard({ product }: ProductCardProps) {
   const addToCart = useCartStore((state) => state.addToCart);
+  const { items } = useCartStore();
+
+  const isInCart = items.find((item) => item.id === product.id);
+  const quantityInCart = isInCart ? isInCart.quantity : 0;
+
+  const isOutOfStock = product.stock <= 0;
+  const hasReachedLimit = quantityInCart >= product.stock;
+
+  const isDisabled = isOutOfStock || hasReachedLimit;
 
   function handleAddToCart() {
     addToCart(product);
@@ -53,9 +62,21 @@ export function ProductCard({ product }: ProductCardProps) {
         <span className={styles.price}>{formatPrice(product.price)}</span>
 
         <div className={styles.footer}>
-          <Button className="w-full gap-2" onClick={handleAddToCart}>
+          <Button
+            className={`w-full gap-2 rounded font-semibold transition-colors ${
+              isDisabled
+                ? "bg-gray-300 cursor-not-allowed text-gray-500"
+                : "bg-black text-white hover:bg-gray-800 cursor-pointer"
+            }`}
+            onClick={handleAddToCart}
+            disabled={isDisabled}
+          >
             <ShoppingCart className="h-4 w-4" />
-            Adicionar
+            {isOutOfStock
+              ? "Esgotado"
+              : hasReachedLimit
+              ? "Limite Atingido"
+              : "Adicionar"}
           </Button>
         </div>
       </div>

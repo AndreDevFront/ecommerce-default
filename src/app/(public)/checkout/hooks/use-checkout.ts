@@ -61,9 +61,13 @@ export function useCheckout() {
       } else {
         toast.error("Erro ao gerar pagamento.");
       }
-    } catch (error) {
-      console.error(error);
-      toast.error("Erro ao realizar pedido.");
+    } catch (error: unknown) {
+      if (error instanceof Error) {
+        console.error(error.message);
+        toast.error(error.message);
+      } else {
+        toast.error("Ocorreu um erro inesperado ao processar o pedido.");
+      }
     } finally {
       setIsSubmitting(false);
     }

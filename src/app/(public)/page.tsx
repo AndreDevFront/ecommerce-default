@@ -6,7 +6,8 @@ import styles from "./page.module.css";
 
 async function getProducts(): Promise<Product[]> {
   const response = await api("/products", {
-    next: { revalidate: 60 },
+    cache: "no-cache",
+    // next: { revalidate: 0 },
   });
 
   if (!response.ok) {

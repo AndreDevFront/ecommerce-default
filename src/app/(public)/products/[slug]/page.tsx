@@ -1,14 +1,16 @@
-import { ChevronLeft, ShoppingCart, Truck } from "lucide-react";
+import { ChevronLeft, Truck } from "lucide-react";
 import { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 
-import { Button } from "@/components/ui/button";
 import { api } from "@/lib/api";
 import { ProductDetailsResponse } from "@/types/product";
 import styles from "./product.module.css";
 
-import Image from "next/image";
+import { formatPrice } from "@/lib/formatters";
+
+import { AddToCartButton } from "@/components/products/add-to-cart-button";
+import { ProductGallery } from "@/components/products/product-gallery";
 
 interface ProductPageProps {
   params: Promise<{ slug: string }>;
@@ -51,10 +53,14 @@ export default async function ProductPage({ params }: ProductPageProps) {
     notFound();
   }
 
-  const formattedPrice = new Intl.NumberFormat("pt-BR", {
-    style: "currency",
-    currency: "BRL",
-  }).format(product.price);
+  const productImages = [
+    product.imageUrl ||
+      "https://images.unsplash.com/photo-1761839257658-23502c67f6d5?w=800",
+    "https://images.unsplash.com/photo-1767992225724-02410ec164e7?w=800",
+    "https://images.unsplash.com/photo-1768158984380-5071c359070f?w=800",
+    "https://images.unsplash.com/photo-1768195459732-1c760b8ec587?w=800",
+    "https://images.unsplash.com/photo-1765840138769-a4c229d7f190?w=800",
+  ];
 
   return (
     <main className={styles.container}>
@@ -66,24 +72,13 @@ export default async function ProductPage({ params }: ProductPageProps) {
       </div>
 
       <div className={styles.grid}>
-        <div className={styles.imageWrapper}>
-          {product.imageUrl ? (
-            <Image
-              src={product.imageUrl}
-              alt={product.name}
-              className={styles.image}
-              fill
-              sizes="(max-width: 768px) 100vw, 50vw"
-              priority
-            />
-          ) : (
-            <div className={styles.noImage}>Sem Imagem</div>
-          )}
+        <div className="w-full">
+          <ProductGallery images={productImages} />
         </div>
 
         <div className={styles.info}>
           <h1 className={styles.title}>{product.name}</h1>
-          <div className={styles.price}>{formattedPrice}</div>
+          <div className={styles.price}>{formatPrice(product.price)}</div>
 
           <p className={styles.description}>{product.description}</p>
 
@@ -102,10 +97,10 @@ export default async function ProductPage({ params }: ProductPageProps) {
           )}
 
           <div className={styles.actions}>
-            <Button size="lg" className={styles.addToCartBtn}>
-              <ShoppingCart className="h-5 w-5" />
-              Adicionar ao Carrinho
-            </Button>
+            <AddToCartButton
+              product={product}
+              className={styles.addToCartBtn}
+            />
 
             <p className={styles.shippingInfo}>
               <Truck className="h-4 w-4" />

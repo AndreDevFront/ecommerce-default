@@ -19,6 +19,7 @@ import { Loader2, Pencil, Plus, Trash2 } from "lucide-react";
 import Link from "next/link";
 import { toast } from "sonner";
 
+import { formatPrice } from "@/lib/formatters";
 import Image from "next/image";
 import styles from "./products.module.css";
 
@@ -100,12 +101,7 @@ export default function ProductsPage() {
                   <td className={styles.td}>
                     <span className={styles.productName}>{product.name}</span>
                   </td>
-                  <td className={styles.td}>
-                    {new Intl.NumberFormat("pt-BR", {
-                      style: "currency",
-                      currency: "BRL",
-                    }).format(product.price)}
-                  </td>
+                  <td className={styles.td}>{formatPrice(product.price)}</td>
                   <td className={styles.td}>{product.stock} un.</td>
                   <td className={styles.td}>
                     <div className={styles.actions}>

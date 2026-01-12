@@ -1,9 +1,10 @@
 import { api } from "@/lib/api";
 import { Product } from "@/types/product";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { useQueryClient } from "@tanstack/react-query";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
-import { useForm } from "react-hook-form";
+import { Resolver, useForm } from "react-hook-form";
 import { toast } from "sonner";
 import { ProductFormData, productFormSchema } from "../product-form.schema";
 
@@ -13,40 +14,68 @@ interface UseProductFormProps {
 
 export function useProductForm({ initialData }: UseProductFormProps) {
   const router = useRouter();
+  const queryClient = useQueryClient();
+
   const [preview, setPreview] = useState<string | null>(
     initialData?.imageUrl || null
   );
 
-  const form = useForm({
-    resolver: zodResolver(productFormSchema),
+  const form = useForm<ProductFormData>({
+    resolver: zodResolver(
+      productFormSchema
+    ) as unknown as Resolver<ProductFormData>,
     defaultValues: {
       name: initialData?.name || "",
       slug: initialData?.slug || "",
       description: initialData?.description || "",
-      price: initialData?.price || 0,
-      stock: initialData?.stock || 0,
+      price: Number(initialData?.price) || 0,
+      stock: Number(initialData?.stock) || 0,
       attributes: {
         peso: initialData?.attributes?.peso || "",
         cor: initialData?.attributes?.cor || "",
         aroma: initialData?.attributes?.aroma || "",
       },
+      imageFile: undefined,
     },
   });
 
-  const { setValue, watch, handleSubmit } = form;
+  const { setValue, watch, handleSubmit, reset } = form;
+
+  useEffect(() => {
+    if (initialData) {
+      reset(
+        {
+          name: initialData.name,
+          slug: initialData.slug,
+          description: initialData.description || "",
+          price: Number(initialData.price),
+          stock: Number(initialData.stock),
+          attributes: {
+            peso: initialData.attributes?.peso || "",
+            cor: initialData.attributes?.cor || "",
+            aroma: initialData.attributes?.aroma || "",
+          },
+          imageFile: undefined,
+        },
+        {
+          keepDirtyValues: true,
+        }
+      );
+    }
+  }, [initialData, reset]);
 
   const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (file) {
       if (preview) URL.revokeObjectURL(preview);
       setPreview(URL.createObjectURL(file));
-      setValue("imageFile", file);
+      setValue("imageFile", file, { shouldDirty: true });
     }
   };
 
   const removeImage = () => {
     setPreview(null);
-    setValue("imageFile", null);
+    setValue("imageFile", undefined, { shouldDirty: true });
   };
 
   const nameValue = watch("name");
@@ -93,6 +122,12 @@ export function useProductForm({ initialData }: UseProductFormProps) {
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify(payload),
         });
+
+        await queryClient.invalidateQueries({
+          queryKey: ["product", initialData.id],
+        });
+        await queryClient.invalidateQueries({ queryKey: ["products"] });
+
         toast.success("Produto atualizado!");
       } else {
         await api("/products", {
@@ -100,6 +135,8 @@ export function useProductForm({ initialData }: UseProductFormProps) {
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify(payload),
         });
+
+        await queryClient.invalidateQueries({ queryKey: ["products"] });
         toast.success("Produto criado!");
       }
 
@@ -117,6 +154,7 @@ export function useProductForm({ initialData }: UseProductFormProps) {
     handleImageChange,
     removeImage,
     handleSubmit: handleSubmit(onSubmit),
+    reset,
     isSubmitting: form.formState.isSubmitting,
     errors: form.formState.errors,
     register: form.register,

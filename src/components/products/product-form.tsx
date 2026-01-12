@@ -1,7 +1,7 @@
 "use client";
-
 import { Loader2, Save } from "lucide-react";
 import { useRouter } from "next/navigation";
+import { useEffect } from "react";
 
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -22,12 +22,19 @@ export function ProductForm({ initialData }: ProductFormProps) {
   const {
     register,
     handleSubmit,
+    reset,
     errors,
     isSubmitting,
     preview,
     handleImageChange,
     removeImage,
   } = useProductForm({ initialData });
+
+  useEffect(() => {
+    if (initialData) {
+      reset(initialData);
+    }
+  }, [initialData, reset]);
 
   return (
     <form onSubmit={handleSubmit} className={styles.form}>
@@ -80,7 +87,7 @@ export function ProductForm({ initialData }: ProductFormProps) {
 
           <div className={styles.field}>
             <label className={styles.label}>Estoque (Unidades)</label>
-            <Input type="number" {...register("stock")} />
+            <Input type="text" {...register("stock")} />
             {errors.stock && (
               <span className={styles.error}>{errors.stock.message}</span>
             )}

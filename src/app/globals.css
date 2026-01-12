@@ -120,3 +120,59 @@
     @apply bg-background text-foreground;
   }
 }
+
+.iiz {
+  margin: 0;
+  position: relative;
+  overflow: hidden;
+  cursor: zoom-in;
+}
+
+.iiz__img {
+  max-width: 100%;
+  height: auto;
+  display: block;
+  pointer-events: none;
+  visibility: visible;
+  opacity: 1;
+}
+
+.iiz__zoom-img {
+  max-width: none !important;
+  position: absolute;
+  top: 0;
+  left: 0;
+  visibility: hidden;
+  opacity: 0;
+  display: block;
+  pointer-events: none;
+  z-index: 50;
+}
+
+.iiz__zoom-img--visible {
+  visibility: visible;
+  opacity: 1;
+  pointer-events: auto;
+  cursor: zoom-out;
+}
+
+.iiz__btn {
+  background: rgba(255, 255, 255, 0.8);
+  width: 40px;
+  height: 40px;
+  border: none;
+  outline: none;
+  padding: 0;
+  position: absolute;
+  top: 0;
+  right: 0;
+  appearance: none;
+  cursor: pointer;
+  visibility: hidden;
+  opacity: 0;
+  transition: opacity 0.2s linear;
+}
+
+.iiz--drag .iiz__zoom-img--visible {
+  cursor: grab;
+}

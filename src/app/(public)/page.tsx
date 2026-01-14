@@ -2,6 +2,7 @@ export const dynamic = "force-dynamic";
 import { ProductCard } from "@/components/product-card";
 import { Product, ProductsResponse } from "@/types/product";
 
+import { HeroBanner } from "@/components/hero/hero";
 import { api } from "@/lib/api";
 import styles from "./page.module.css";
 
@@ -28,6 +29,14 @@ export default async function Home() {
       <div className={styles.contentWrapper}>
         <h1 className={styles.title}>Destaques da Loja</h1>
         <p className={styles.subtitle}>Confira nossas novidades fresquinhas.</p>
+
+        <HeroBanner
+          title="Ilumine seus momentos"
+          subtitle="Descubra nossa coleção exclusiva de velas aromáticas artesanais. O toque perfeito de conforto e elegância para o seu lar."
+          backgroundImageUrl="https://images.unsplash.com/photo-1602523772275-2292723c004d?q=80&w=1920&auto=format&fit=crop"
+          ctaText="Ver Coleção"
+          ctaLink="/produtos"
+        />
 
         <div className={styles.productsGrid}>
           {products.map((product) => (

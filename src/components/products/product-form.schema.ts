@@ -23,7 +23,8 @@ export const productFormSchema = z.object({
     aroma: z.string().min(1, "Aroma é obrigatório"),
   }),
 
-  imageFile: z.any().optional(),
+  // imageFile: z.any().optional(),
+  images: z.array(z.union([z.string(), z.instanceof(File)])).optional(),
 });
 
 export type ProductFormData = z.infer<typeof productFormSchema>;

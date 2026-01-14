@@ -8,6 +8,7 @@ export interface Product {
   isActive: boolean;
   attributes: Record<string, string>;
   imageUrl: string | null;
+  images: string[];
   createdAt: string;
 }
 

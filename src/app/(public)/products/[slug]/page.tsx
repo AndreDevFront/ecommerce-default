@@ -53,14 +53,12 @@ export default async function ProductPage({ params }: ProductPageProps) {
     notFound();
   }
 
-  const productImages = [
-    product.imageUrl ||
-      "https://images.unsplash.com/photo-1761839257658-23502c67f6d5?w=800",
-    "https://images.unsplash.com/photo-1767992225724-02410ec164e7?w=800",
-    "https://images.unsplash.com/photo-1768158984380-5071c359070f?w=800",
-    "https://images.unsplash.com/photo-1768195459732-1c760b8ec587?w=800",
-    "https://images.unsplash.com/photo-1765840138769-a4c229d7f190?w=800",
-  ];
+  const productImages =
+    product.images && product.images.length > 0
+      ? product.images
+      : product.imageUrl
+      ? [product.imageUrl]
+      : ["/placeholder.png"];
 
   return (
     <main className={styles.container}>

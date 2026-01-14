@@ -3,8 +3,8 @@ import { Product } from "@/types/product";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useQueryClient } from "@tanstack/react-query";
 import { useRouter } from "next/navigation";
-import { useEffect, useState } from "react";
-import { Resolver, useForm } from "react-hook-form";
+import { useEffect } from "react";
+import { Resolver, useForm, useWatch } from "react-hook-form";
 import { toast } from "sonner";
 import { ProductFormData, productFormSchema } from "../product-form.schema";
 
@@ -15,10 +15,6 @@ interface UseProductFormProps {
 export function useProductForm({ initialData }: UseProductFormProps) {
   const router = useRouter();
   const queryClient = useQueryClient();
-
-  const [preview, setPreview] = useState<string | null>(
-    initialData?.imageUrl || null
-  );
 
   const form = useForm<ProductFormData>({
     resolver: zodResolver(
@@ -35,55 +31,60 @@ export function useProductForm({ initialData }: UseProductFormProps) {
         cor: initialData?.attributes?.cor || "",
         aroma: initialData?.attributes?.aroma || "",
       },
-      imageFile: undefined,
+
+      images: initialData?.images || [],
     },
   });
 
-  const { setValue, watch, handleSubmit, reset } = form;
+  const { setValue, handleSubmit, reset, control } = form;
+
+  const currentImages =
+    useWatch({
+      control,
+      name: "images",
+    }) || [];
+
+  const nameValue = useWatch({ control, name: "name" });
+  const slugValue = useWatch({ control, name: "slug" });
 
   useEffect(() => {
     if (initialData) {
-      reset(
-        {
-          name: initialData.name,
-          slug: initialData.slug,
-          description: initialData.description || "",
-          price: Number(initialData.price),
-          stock: Number(initialData.stock),
-          attributes: {
-            peso: initialData.attributes?.peso || "",
-            cor: initialData.attributes?.cor || "",
-            aroma: initialData.attributes?.aroma || "",
-          },
-          imageFile: undefined,
+      reset({
+        name: initialData.name,
+        slug: initialData.slug,
+        description: initialData.description || "",
+        price: Number(initialData.price),
+        stock: Number(initialData.stock),
+        attributes: {
+          peso: initialData.attributes?.peso || "",
+          cor: initialData.attributes?.cor || "",
+          aroma: initialData.attributes?.aroma || "",
         },
-        {
-          keepDirtyValues: true,
-        }
-      );
+
+        images: initialData.images || [],
+      });
     }
   }, [initialData, reset]);
 
-  const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const file = e.target.files?.[0];
-    if (file) {
-      if (preview) URL.revokeObjectURL(preview);
-      setPreview(URL.createObjectURL(file));
-      setValue("imageFile", file, { shouldDirty: true });
+  const handleImageAdd = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const files = Array.from(e.target.files || []);
+    if (files.length > 0) {
+      const updatedImages = [...currentImages, ...files];
+      setValue("images", updatedImages, { shouldDirty: true });
     }
+    e.target.value = "";
   };
 
-  const removeImage = () => {
-    setPreview(null);
-    setValue("imageFile", undefined, { shouldDirty: true });
+  const removeImage = (index: number) => {
+    const updatedImages = currentImages.filter(
+      (_: unknown, i: number) => i !== index
+    );
+    setValue("images", updatedImages, { shouldDirty: true });
   };
-
-  const nameValue = watch("name");
-  const slugValue = watch("slug");
 
   useEffect(() => {
     if (!initialData && nameValue && !slugValue) {
-      const slug = nameValue
+      const slug = (nameValue || "")
         .toLowerCase()
         .normalize("NFD")
         .replace(/[\u0300-\u036f]/g, "")
@@ -95,25 +96,35 @@ export function useProductForm({ initialData }: UseProductFormProps) {
 
   const onSubmit = async (data: ProductFormData) => {
     try {
-      let finalImageUrl = initialData?.imageUrl || null;
+      const uploadPromises = (data.images || []).map(async (item) => {
+        if (item instanceof File) {
+          const formData = new FormData();
+          formData.append("file", item);
 
-      if (data.imageFile instanceof File) {
-        const formData = new FormData();
-        formData.append("file", data.imageFile);
+          const res = await api("/uploads", {
+            method: "POST",
+            body: formData,
+          });
 
-        const uploadRes = await api("/uploads", {
-          method: "POST",
-          body: formData,
-        });
+          if (!res.ok) {
+            const errorData = await res.json().catch(() => ({}));
+            console.error("Erro detalhado do upload:", errorData);
+            throw new Error(
+              errorData.message || `Erro no upload: ${res.statusText}`
+            );
+          }
+          const json = await res.json();
+          return json.url || json.key;
+        }
 
-        if (!uploadRes.ok) throw new Error("Falha no upload");
-        const uploadData = await uploadRes.json();
-        finalImageUrl = uploadData.url || uploadData.key;
-      }
+        return item;
+      });
+
+      const finalImages = await Promise.all(uploadPromises);
 
       const payload = {
         ...data,
-        image: finalImageUrl,
+        images: finalImages,
       };
 
       if (initialData) {
@@ -122,12 +133,6 @@ export function useProductForm({ initialData }: UseProductFormProps) {
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify(payload),
         });
-
-        await queryClient.invalidateQueries({
-          queryKey: ["product", initialData.id],
-        });
-        await queryClient.invalidateQueries({ queryKey: ["products"] });
-
         toast.success("Produto atualizado!");
       } else {
         await api("/products", {
@@ -135,26 +140,24 @@ export function useProductForm({ initialData }: UseProductFormProps) {
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify(payload),
         });
-
-        await queryClient.invalidateQueries({ queryKey: ["products"] });
         toast.success("Produto criado!");
       }
 
+      await queryClient.invalidateQueries({ queryKey: ["products"] });
       router.push("/admin/products");
       router.refresh();
     } catch (error) {
       console.error(error);
-      toast.error("Erro ao salvar.");
+      toast.error("Erro ao salvar produto.");
     }
   };
 
   return {
     form,
-    preview,
-    handleImageChange,
+    images: currentImages,
+    handleImageAdd,
     removeImage,
     handleSubmit: handleSubmit(onSubmit),
-    reset,
     isSubmitting: form.formState.isSubmitting,
     errors: form.formState.errors,
     register: form.register,

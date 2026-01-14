@@ -14,6 +14,10 @@ export function api(path: string, init?: RequestInit) {
     headers.set("Authorization", `Bearer ${token}`);
   }
 
+  if (!(init?.body instanceof FormData) && !headers.has("Content-Type")) {
+    headers.set("Content-Type", "application/json");
+  }
+
   return fetch(url, {
     ...init,
     headers,

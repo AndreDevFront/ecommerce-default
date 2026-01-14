@@ -1,12 +1,10 @@
 "use client";
-import { Loader2, Save } from "lucide-react";
-import { useRouter } from "next/navigation";
-import { useEffect } from "react";
-
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Product } from "@/types/product";
+import { Loader2, Save } from "lucide-react";
+import { useRouter } from "next/navigation";
 
 import { useProductForm } from "./hooks/use-product-form";
 import { ImageUpload } from "./image-upload";
@@ -22,19 +20,12 @@ export function ProductForm({ initialData }: ProductFormProps) {
   const {
     register,
     handleSubmit,
-    reset,
     errors,
     isSubmitting,
-    preview,
-    handleImageChange,
+    handleImageAdd,
     removeImage,
+    images,
   } = useProductForm({ initialData });
-
-  useEffect(() => {
-    if (initialData) {
-      reset(initialData);
-    }
-  }, [initialData, reset]);
 
   return (
     <form onSubmit={handleSubmit} className={styles.form}>
@@ -134,8 +125,8 @@ export function ProductForm({ initialData }: ProductFormProps) {
       </div>
 
       <ImageUpload
-        preview={preview}
-        onImageChange={handleImageChange}
+        value={images}
+        onImageAdd={handleImageAdd}
         onRemove={removeImage}
       />
 

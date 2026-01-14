@@ -1,7 +1,8 @@
 import { Button } from "@/components/ui/button";
 import { User } from "lucide-react";
 import Link from "next/link";
-import { CartSidebar } from "./cart/cart-sidebar";
+
+import { CartSidebar } from "../cart/cart-sidebar";
 import styles from "./header.module.css";
 
 export function Header() {

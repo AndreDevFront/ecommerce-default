@@ -1,4 +1,5 @@
-import { Header } from "@/components/header";
+import { Footer } from "@/components/footer/footer";
+import { Header } from "@/components/header/header";
 
 interface Props {
   children: React.ReactNode;
@@ -9,6 +10,7 @@ export default function PublicLayout({ children }: Props) {
     <>
       <Header />
       {children}
+      <Footer />
     </>
   );
 }

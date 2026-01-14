@@ -1,4 +1,4 @@
-@reference "../app/globals.css";
+@reference "../../app/globals.css";
 
 .header {
   @apply sticky top-0 z-50 w-full border-b border-gray-100 bg-white/80 backdrop-blur-md;

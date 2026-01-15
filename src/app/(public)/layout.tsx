@@ -1,5 +1,7 @@
 import { Footer } from "@/components/footer/footer";
 import { Header } from "@/components/header/header";
+import { ReactQueryProvider } from "@/providers/query-provider";
+import React from "react";
 
 interface Props {
   children: React.ReactNode;
@@ -8,9 +10,11 @@ interface Props {
 export default function PublicLayout({ children }: Props) {
   return (
     <>
-      <Header />
-      {children}
-      <Footer />
+      <ReactQueryProvider>
+        <Header />
+        {children}
+        <Footer />
+      </ReactQueryProvider>
     </>
   );
 }

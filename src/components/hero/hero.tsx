@@ -24,7 +24,7 @@ export function HeroBanner({
         src={backgroundImageUrl}
         alt="Banner principal"
         fill
-        className="object-cover"
+        className={styles.heroImage}
         priority
         quality={90}
       />

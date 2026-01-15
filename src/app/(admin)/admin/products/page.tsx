@@ -76,7 +76,7 @@ export default function ProductsPage() {
                 <th className={styles.th}>Imagem</th>
                 <th className={styles.th}>Nome</th>
                 <th className={styles.th}>Preço</th>
-                <th className={styles.th}>Estoque</th>
+                <th className={`${styles.th} hidden md:table-cell`}>Estoque</th>
                 <th className={styles.th}>Ações</th>
               </tr>
             </thead>
@@ -102,7 +102,9 @@ export default function ProductsPage() {
                     <span className={styles.productName}>{product.name}</span>
                   </td>
                   <td className={styles.td}>{formatPrice(product.price)}</td>
-                  <td className={styles.td}>{product.stock} un.</td>
+                  <td className={`${styles.td} hidden md:table-cell`}>
+                    {product.stock} un.
+                  </td>
                   <td className={styles.td}>
                     <div className={styles.actions}>
                       <Link href={`/admin/products/${product.id}/edit`}>

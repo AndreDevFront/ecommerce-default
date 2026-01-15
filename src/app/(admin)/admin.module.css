@@ -17,5 +17,8 @@
 }
 
 .mainContent {
-  @apply flex-1 md:ml-64 p-8;
+  @apply flex-1 w-full max-w-full p-4 md:p-8;
+
+  @apply md:ml-64;
+  @apply mt-16 md:mt-0;
 }

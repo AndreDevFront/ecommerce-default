@@ -7,7 +7,6 @@ import {
   CreditCard,
   Eye,
   Loader2,
-  LogOut,
   MapPin,
   Package,
   QrCode,
@@ -73,11 +72,6 @@ export default function AdminOrdersPage() {
   const orders = data?.data || [];
   const meta = data?.meta;
 
-  function logout() {
-    document.cookie = "velas-token=; path=/; max-age=0;";
-    router.push("/login");
-  }
-
   useEffect(() => {
     if (isError) {
       if (error instanceof Error && error.message === "Unauthorized") {
@@ -94,6 +88,10 @@ export default function AdminOrdersPage() {
         return styles.statusPENDING;
       case "CANCELED":
         return styles.statusCANCELED;
+      case "SHIPPED":
+        return styles.statusSHIPPED;
+      case "DELIVERED":
+        return styles.statusDELIVERED;
       default:
         return "";
     }
@@ -101,8 +99,8 @@ export default function AdminOrdersPage() {
 
   if (isLoading) {
     return (
-      <div className="flex h-screen items-center justify-center bg-gray-50">
-        <Loader2 className="h-8 w-8 animate-spin text-gray-400" />
+      <div className={styles.boxIsLoading}>
+        <Loader2 className={styles.loader2} />
       </div>
     );
   }
@@ -131,9 +129,6 @@ export default function AdminOrdersPage() {
           <span className={styles.totalCount}>
             Total: <strong>{meta?.total || 0}</strong>
           </span>
-          <button onClick={() => logout()} className={styles.btnLogout}>
-            Sair <LogOut size={14} />
-          </button>
         </div>
       </header>
 
@@ -144,10 +139,12 @@ export default function AdminOrdersPage() {
               <tr>
                 <th className={styles.th}>ID / Data</th>
                 <th className={styles.th}>Cliente</th>
-                <th className={styles.th}>Itens</th>
-                <th className={styles.th}>Pagamento</th>
+                <th className={`${styles.th} hidden md:table-cell`}>Itens</th>
+                <th className={`${styles.th} hidden md:table-cell`}>
+                  Pagamento
+                </th>
                 <th className={styles.th}>Status</th>
-                <th className={styles.th}>Total</th>
+                <th className={`${styles.th} hidden md:table-cell`}>Total</th>
                 <th className={styles.th}>Ações</th>
               </tr>
             </thead>
@@ -191,9 +188,9 @@ export default function AdminOrdersPage() {
                       </div>
                     </td>
 
-                    <td className={styles.cell}>
+                    <td className={`${styles.cell} hidden md:table-cell`}>
                       <div className={styles.itemsList}>
-                        {order.items.map((item) => (
+                        {order.items.slice(0, 2).map((item) => (
                           <div key={item.id} className={styles.itemRow}>
                             <span className="font-bold mr-1">
                               {item.quantity}x
@@ -201,10 +198,15 @@ export default function AdminOrdersPage() {
                             {item.productName}
                           </div>
                         ))}
+                        {order.items.length > 2 && (
+                          <span className="text-xs text-gray-500 pl-1">
+                            +{order.items.length - 2} mais...
+                          </span>
+                        )}
                       </div>
                     </td>
 
-                    <td className={styles.cell}>
+                    <td className={`${styles.cell} hidden md:table-cell`}>
                       <div
                         className={`${styles.paymentBadge} ${
                           order.paymentMethod === "pix"
@@ -214,13 +216,11 @@ export default function AdminOrdersPage() {
                       >
                         {order.paymentMethod === "pix" ? (
                           <>
-                            <QrCode size={14} />
-                            <span>PIX</span>
+                            <QrCode size={14} /> <span>PIX</span>
                           </>
                         ) : (
                           <>
-                            <CreditCard size={14} />
-                            <span>Cartão</span>
+                            <CreditCard size={14} /> <span>Cartão</span>
                           </>
                         )}
                       </div>
@@ -232,11 +232,11 @@ export default function AdminOrdersPage() {
                           order.status
                         )}`}
                       >
-                        {STATUS_MAP[order.status] || order.status}{" "}
+                        {STATUS_MAP[order.status] || order.status}
                       </span>
                     </td>
 
-                    <td className={styles.cell}>
+                    <td className={`${styles.cell} hidden md:table-cell`}>
                       <span className={styles.total}>
                         {formatPrice(order.total)}
                       </span>
@@ -334,7 +334,23 @@ export default function AdminOrdersPage() {
 
               <div className={styles.detailSection}>
                 <div className={styles.detailTitle}>
-                  <Package size={14} /> Resumo
+                  <Package size={14} /> Itens do Pedido
+                </div>
+                <div className={styles.detailCard}>
+                  {selectedOrder.items.map((item, idx) => (
+                    <div key={idx} className={styles.detailRow}>
+                      <span>
+                        <span className="font-bold">{item.quantity}x</span>{" "}
+                        {item.productName}
+                      </span>
+                    </div>
+                  ))}
+                </div>
+              </div>
+
+              <div className={styles.detailSection}>
+                <div className={styles.detailTitle}>
+                  <CreditCard size={14} /> Resumo Financeiro
                 </div>
                 <div className={styles.detailCard}>
                   <div className={styles.detailRow}>
@@ -349,9 +365,9 @@ export default function AdminOrdersPage() {
                       {selectedOrder.paymentMethod}
                     </span>
                   </div>
-                  <div className="border-t border-gray-200 pt-2 mt-2 flex justify-between items-center">
-                    <span className="font-bold text-gray-900">Total Pago</span>
-                    <span className="font-bold text-green-700 text-lg">
+                  <div className={styles.boxTotalPayment}>
+                    <span className={styles.totalPayment}>Total Pago</span>
+                    <span className={styles.totalPaymentValue}>
                       {formatPrice(selectedOrder.total)}
                     </span>
                   </div>

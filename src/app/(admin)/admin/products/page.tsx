@@ -62,8 +62,8 @@ export default function ProductsPage() {
 
       <div className={styles.tableContainer}>
         {isLoading ? (
-          <div className={styles.loading}>
-            <Loader2 className="h-8 w-8 animate-spin text-blue-600" />
+          <div className={styles.boxIsLoading}>
+            <Loader2 className={styles.loader2} />
           </div>
         ) : isError ? (
           <div className="p-10 text-center text-red-500">

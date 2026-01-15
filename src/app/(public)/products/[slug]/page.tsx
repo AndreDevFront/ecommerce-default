@@ -22,6 +22,7 @@ async function getProduct(slug: string) {
 
     if (!response.ok) {
       if (response.status === 404) return null;
+
       throw new Error("Erro ao carregar produto");
     }
 

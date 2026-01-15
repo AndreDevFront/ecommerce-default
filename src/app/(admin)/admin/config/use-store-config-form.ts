@@ -1,13 +1,14 @@
 import { api } from "@/lib/api";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useRouter } from "next/navigation";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useFieldArray, useForm } from "react-hook-form";
 import { toast } from "sonner";
 import { StoreConfigFormSchema, type StoreConfigFormData } from "./schema";
 
 export function useStoreConfigForm() {
   const router = useRouter();
+  const [isLoading, setIsLoading] = useState(true);
 
   const form = useForm<StoreConfigFormData>({
     resolver: zodResolver(StoreConfigFormSchema),
@@ -16,40 +17,57 @@ export function useStoreConfigForm() {
     },
   });
 
+  const { reset, control } = form;
+
   const { fields, append, remove } = useFieldArray({
-    control: form.control,
+    control: control,
     name: "banners",
   });
 
   useEffect(() => {
+    let isMounted = true;
+
     async function loadConfig() {
       try {
         const res = await api("/store-config");
-        if (!res.ok) return;
+
+        if (!res.ok) {
+          if (isMounted) setIsLoading(false);
+          return;
+        }
 
         const data = await res.json();
 
-        if (
-          data.config &&
-          data.config.banners &&
-          data.config.banners.length > 0
-        ) {
-          form.reset({ banners: data.config.banners });
-        } else {
-          append({
-            title: "",
-            subtitle: "",
-            imageUrl: "",
-            ctaText: "Ver Oferta",
-            ctaLink: "/produtos",
-          });
+        if (isMounted) {
+          if (
+            data.config &&
+            data.config.banners &&
+            data.config.banners.length > 0
+          ) {
+            reset({ banners: data.config.banners });
+          } else {
+            append({
+              title: "",
+              subtitle: "",
+              imageUrl: "",
+              ctaText: "Ver Oferta",
+              ctaLink: "/produtos",
+            });
+          }
         }
       } catch (error) {
         console.error("Erro ao carregar configurações", error);
+      } finally {
+        if (isMounted) setIsLoading(false);
       }
     }
+
     loadConfig();
-  }, [form, append]);
+
+    return () => {
+      isMounted = false;
+    };
+  }, [reset, append]);
 
   const handleImageUpload = async (file: File, index: number) => {
     try {
@@ -67,9 +85,7 @@ export function useStoreConfigForm() {
       form.setValue(`banners.${index}.imageUrl`, data.url);
     } catch (error) {
       console.error("Erro no upload:", error);
-      toast.error(
-        "Erro ao enviar imagem. Verifique se o backend está rodando."
-      );
+      toast.error("Erro ao enviar imagem.");
     }
   };
 
@@ -101,5 +117,6 @@ export function useStoreConfigForm() {
     handleImageUpload,
     onSubmit: form.handleSubmit(onSubmit),
     isSubmitting: form.formState.isSubmitting,
+    isLoading,
   };
 }

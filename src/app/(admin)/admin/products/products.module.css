@@ -70,3 +70,10 @@
 .loading {
   @apply flex justify-center py-20 text-gray-500;
 }
+
+.boxIsLoading {
+  @apply flex h-screen items-center justify-center bg-gray-50;
+}
+.loader2 {
+  @apply h-8 w-8 animate-spin text-gray-400;
+}

@@ -1,0 +1,77 @@
+@reference "../../globals.css";
+
+.container {
+  @apply mx-auto max-w-7xl px-6 py-10;
+}
+
+.backLinkWrapper {
+  @apply mb-6;
+}
+
+.backLink {
+  @apply inline-flex items-center text-sm text-gray-500 hover:text-blue-600 transition-colors;
+}
+
+.grid {
+  @apply grid grid-cols-1 gap-12 lg:grid-cols-2;
+}
+
+.imageWrapper {
+  @apply relative aspect-square w-full overflow-hidden rounded-xl bg-gray-100 border border-gray-200;
+}
+
+.image {
+  @apply h-full w-full object-cover object-center;
+}
+
+.noImage {
+  @apply flex h-full items-center justify-center bg-gray-50 text-gray-400;
+}
+
+.info {
+  @apply flex flex-col;
+}
+
+.title {
+  @apply text-3xl font-extrabold text-gray-900 mb-2;
+}
+
+.price {
+  @apply text-2xl font-bold text-blue-600 mb-6;
+}
+
+.description {
+  @apply text-base text-gray-600 leading-relaxed mb-8;
+}
+
+.attributesTitle {
+  @apply text-sm font-medium text-gray-900 mb-3;
+}
+
+.attributesGrid {
+  @apply grid grid-cols-2 gap-4 mb-8 sm:grid-cols-3;
+}
+
+.attributeCard {
+  @apply flex flex-col rounded-lg border border-gray-200 bg-gray-50 p-3;
+}
+
+.attrKey {
+  @apply text-xs text-gray-500 uppercase font-semibold;
+}
+
+.attrValue {
+  @apply text-sm font-medium text-gray-900 mt-1;
+}
+
+.actions {
+  @apply mt-auto pt-6 border-t border-gray-100;
+}
+
+.addToCartBtn {
+  @apply w-full gap-2 text-lg h-12;
+}
+
+.shippingInfo {
+  @apply mt-4 flex items-center justify-center gap-2 text-sm text-gray-500;
+}

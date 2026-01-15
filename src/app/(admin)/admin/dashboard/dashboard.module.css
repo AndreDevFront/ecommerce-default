@@ -93,3 +93,10 @@
 .error {
   @apply p-6 rounded-lg bg-red-50 text-red-600 border border-red-200;
 }
+
+.boxIsLoading {
+  @apply flex h-screen items-center justify-center bg-gray-50;
+}
+.loader2 {
+  @apply h-8 w-8 animate-spin text-gray-400;
+}

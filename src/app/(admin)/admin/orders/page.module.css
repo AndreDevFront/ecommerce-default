@@ -1,11 +1,11 @@
 @reference "../../../globals.css";
 
 .container {
-  @apply container mx-auto px-4 py-10 min-h-screen bg-gray-50;
+  @apply space-y-6;
 }
 
 .header {
-  @apply flex flex-col md:flex-row md:items-center justify-between gap-4 mb-8;
+  @apply flex flex-col gap-4 md:flex-row md:items-center justify-between mb-8;
 }
 
 .title {
@@ -13,11 +13,11 @@
 }
 
 .headerActions {
-  @apply flex items-center gap-4 bg-white px-4 py-2 rounded-lg border border-gray-200 shadow-sm;
+  @apply flex items-center gap-4 bg-white px-4 py-2 rounded-lg border border-gray-200 shadow-sm justify-between;
 }
 
 .totalCount {
-  @apply text-sm text-gray-600 font-medium border-r border-gray-200 pr-4;
+  @apply text-sm text-gray-600 font-medium  pr-4;
 }
 
 .btnLogout {
@@ -25,7 +25,15 @@
 }
 
 .tableWrapper {
-  @apply rounded-xl border border-gray-300 overflow-hidden shadow-xl bg-white;
+  @apply w-full rounded-xl border border-gray-200 bg-white shadow-sm overflow-hidden;
+  @apply overflow-x-auto;
+  -webkit-overflow-scrolling: touch;
+  max-width: calc(100vw - 32px);
+}
+@media (min-width: 768px) {
+  .tableWrapper {
+    max-width: 100%;
+  }
 }
 
 .table {
@@ -60,10 +68,10 @@
   @apply flex flex-col;
 }
 .customerName {
-  @apply font-medium text-slate-900 block;
+  @apply font-medium text-slate-900 block max-w-[150px] truncate md:max-w-none;
 }
 .customerEmail {
-  @apply text-xs text-slate-500;
+  @apply text-xs text-slate-500 hidden md:block;
 }
 .date {
   @apply text-xs text-slate-500 whitespace-nowrap mt-1 block;
@@ -82,7 +90,6 @@
 .paymentBadge {
   @apply inline-flex items-center gap-1.5 px-2.5 py-1 rounded-md text-xs font-medium border bg-white shadow-sm;
 }
-
 .statusBadge {
   @apply inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium border shadow-sm;
 }
@@ -96,22 +103,25 @@
 .statusCANCELED {
   @apply bg-red-100 text-red-800 border-red-200;
 }
-
-.pagination {
-  @apply flex items-center justify-between border-t border-gray-200 bg-gray-50 px-6 py-3;
+.statusSHIPPED {
+  @apply bg-blue-100 text-blue-800 border-blue-200;
+}
+.statusDELIVERED {
+  @apply bg-gray-100 text-gray-800 border-gray-200;
 }
 
+.pagination {
+  @apply flex flex-col md:flex-row items-center justify-between border-t border-gray-200 bg-gray-50 px-6 py-4 gap-4;
+}
 .paginationInfo {
   @apply text-sm text-gray-700;
 }
 .paginationButtons {
-  @apply flex gap-2;
+  @apply flex gap-2 w-full md:w-auto justify-center;
 }
-
 .btnNav {
-  @apply relative inline-flex items-center gap-1 rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 ring-1 ring-inset ring-gray-300 hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed transition-all shadow-sm;
+  @apply relative inline-flex items-center gap-1 rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 ring-1 ring-inset ring-gray-300 hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed transition-all shadow-sm cursor-pointer;
 }
-
 .btnView {
   @apply inline-flex items-center gap-1.5 px-3 py-1.5 rounded-md text-xs font-medium bg-white text-gray-700 border border-gray-300 hover:bg-gray-50 transition-colors shadow-sm cursor-pointer;
 }
@@ -119,39 +129,47 @@
 .modalOverlay {
   @apply fixed inset-0 bg-black/50 z-50 flex items-center justify-center p-4 backdrop-blur-sm animate-in fade-in duration-200;
 }
-
 .modalContent {
-  @apply bg-white rounded-xl shadow-2xl w-full max-w-lg overflow-hidden animate-in zoom-in-95 duration-200 border border-gray-200;
+  @apply bg-white rounded-xl shadow-2xl w-full max-w-lg max-h-[90vh] overflow-y-auto animate-in zoom-in-95 duration-200 border border-gray-200;
 }
-
 .modalHeader {
-  @apply px-6 py-4 border-b border-gray-100 flex justify-between items-center bg-gray-50;
+  @apply px-6 py-4 border-b border-gray-100 flex justify-between items-center bg-gray-50 sticky top-0 z-10;
 }
-
 .modalTitle {
   @apply text-lg font-bold text-gray-900;
 }
-
 .btnClose {
-  @apply p-1 rounded-md text-gray-400 hover:text-gray-600 hover:bg-gray-200 transition-colors;
+  @apply p-1 rounded-md text-gray-400 hover:text-gray-600 hover:bg-gray-200 transition-colors cursor-pointer;
 }
-
 .modalBody {
   @apply p-6 space-y-6;
 }
-
 .detailSection {
   @apply space-y-3;
 }
-
 .detailTitle {
   @apply text-xs font-semibold text-gray-500 uppercase tracking-wider flex items-center gap-2;
 }
-
 .detailCard {
   @apply bg-gray-50 p-4 rounded-lg border border-gray-100 text-sm text-gray-700 space-y-1;
 }
-
 .detailRow {
   @apply flex justify-between border-b border-gray-100 pb-2 last:border-0 last:pb-0;
+}
+
+.boxIsLoading {
+  @apply flex h-screen items-center justify-center bg-gray-50;
+}
+.loader2 {
+  @apply h-8 w-8 animate-spin text-gray-400;
+}
+
+.boxTotalPayment {
+  @apply border-t border-gray-200 pt-2 mt-2 flex justify-between items-center;
+}
+.totalPayment {
+  @apply text-sm text-gray-700;
+}
+.totalPaymentValue {
+  @apply font-bold text-green-700 text-lg;
 }

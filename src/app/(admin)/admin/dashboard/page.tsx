@@ -8,6 +8,7 @@ import {
   ShoppingBagIcon,
 } from "@heroicons/react/24/outline";
 import { useQuery } from "@tanstack/react-query";
+import { Loader2 } from "lucide-react";
 import styles from "./dashboard.module.css";
 
 export default function DashboardPage() {
@@ -18,7 +19,11 @@ export default function DashboardPage() {
   });
 
   if (isLoading) {
-    return <div className={styles.loading}>Carregando métricas...</div>;
+    return (
+      <div className={styles.boxIsLoading}>
+        <Loader2 className={styles.loader2} />
+      </div>
+    );
   }
 
   if (isError || !data) {

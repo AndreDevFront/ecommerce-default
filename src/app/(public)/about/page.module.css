@@ -1,0 +1,42 @@
+@reference "../../globals.css";
+
+.mainContainer {
+  @apply bg-gray-50 flex flex-col items-center pb-20;
+}
+
+.contentWrapper {
+  @apply w-full max-w-7xl px-6 py-10;
+}
+
+.title {
+  @apply text-3xl font-bold text-gray-900 mb-2;
+}
+
+.subtitle {
+  @apply mb-8 text-gray-600;
+}
+
+.backLinkWrapper {
+  @apply mb-6;
+}
+
+.backLink {
+  @apply inline-flex items-center text-sm text-gray-500 hover:text-blue-600 transition-colors;
+}
+
+.content {
+  @apply text-gray-700 leading-relaxed text-lg;
+}
+
+.content p {
+  @apply mb-6 text-justify;
+}
+
+.content strong {
+  @apply font-bold text-gray-900;
+}
+
+.signature {
+  @apply mt-10 pt-10 border-t border-gray-100 text-2xl text-gray-900 text-center;
+  @apply font-serif italic;
+}

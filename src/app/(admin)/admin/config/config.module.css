@@ -1,7 +1,7 @@
 @reference "../../../globals.css";
 
 .container {
-  @apply p-6 max-w-5xl mx-auto;
+  @apply space-y-6;
 }
 
 .header {
@@ -9,7 +9,7 @@
 }
 
 .footer {
-  @apply flex items-center justify-between mt-8;
+  @apply flex items-center justify-end mt-8;
 }
 
 .title {
@@ -21,7 +21,12 @@
 }
 
 .saveButton {
-  @apply flex items-center gap-2 bg-blue-600 hover:bg-blue-700 text-white px-6 py-2.5 rounded-lg font-medium transition-colors disabled:opacity-50 cursor-pointer;
+  @apply flex items-center justify-center gap-2 bg-blue-600 hover:bg-blue-700 text-white px-6 py-2.5 rounded-lg font-medium transition-colors disabled:opacity-50 cursor-pointer w-full;
+}
+@media (min-width: 768px) {
+  .saveButton {
+    @apply px-6 py-2.5 rounded-lg w-[196px];
+  }
 }
 
 .section {
@@ -29,7 +34,12 @@
 }
 
 .sectionHeader {
-  @apply p-6 border-b border-slate-100 flex justify-between items-center bg-slate-50/50;
+  @apply p-6 border-b border-slate-100 flex items-center bg-slate-50/50 flex-wrap justify-center;
+}
+@media (min-width: 768px) {
+  .sectionHeader {
+    @apply justify-between;
+  }
 }
 
 .sectionTitle {
@@ -109,9 +119,21 @@
 }
 
 .row {
-  @apply grid grid-cols-2 gap-4;
+  @apply grid gap-4;
+}
+@media (min-width: 768px) {
+  .row {
+    @apply grid grid-cols-2;
+  }
 }
 
 .emptyList {
   @apply text-center py-12 text-slate-500 bg-slate-50 rounded-lg border border-dashed border-slate-300;
+}
+
+.boxIsLoading {
+  @apply flex h-screen items-center justify-center bg-gray-50;
+}
+.loader2 {
+  @apply h-8 w-8 animate-spin text-gray-400;
 }

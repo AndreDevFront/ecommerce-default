@@ -1,6 +1,13 @@
 "use client";
 
-import { ImageIcon, Plus, Save, Trash2, UploadCloud } from "lucide-react";
+import {
+  ImageIcon,
+  Loader2,
+  Plus,
+  Save,
+  Trash2,
+  UploadCloud,
+} from "lucide-react";
 import Image from "next/image";
 import styles from "./config.module.css";
 import { useStoreConfigForm } from "./use-store-config-form";
@@ -14,7 +21,16 @@ export default function StoreConfigPage() {
     handleImageUpload,
     onSubmit,
     isSubmitting,
+    isLoading,
   } = useStoreConfigForm();
+
+  if (isLoading) {
+    return (
+      <div className={styles.boxIsLoading}>
+        <Loader2 className={styles.loader2} />
+      </div>
+    );
+  }
 
   return (
     <div className={styles.container}>
@@ -25,15 +41,6 @@ export default function StoreConfigPage() {
             Gerencie os banners e a aparência da página inicial.
           </p>
         </div>
-
-        <button
-          onClick={onSubmit}
-          disabled={isSubmitting}
-          className={styles.saveButton}
-        >
-          <Save className="w-4 h-4" />
-          {isSubmitting ? "Salvando..." : "Salvar Alterações"}
-        </button>
       </div>
 
       <div className={styles.section}>
@@ -71,7 +78,6 @@ export default function StoreConfigPage() {
                 </button>
 
                 <div className={styles.cardGrid}>
-                  {/* Coluna Upload */}
                   <div className={styles.uploadCol}>
                     <label className={styles.label}>Imagem do Banner</label>
 
@@ -82,6 +88,8 @@ export default function StoreConfigPage() {
                           alt="Preview"
                           fill
                           className="object-cover"
+                          sizes="(max-width: 768px) 100vw, 30vw"
+                          loading="eager"
                         />
                       ) : (
                         <div className={styles.emptyState}>
@@ -121,7 +129,6 @@ export default function StoreConfigPage() {
                     )}
                   </div>
 
-                  {/* Coluna Formulário */}
                   <div className={styles.formCol}>
                     <div className={styles.inputGroup}>
                       <label className={styles.label}>Título Principal</label>

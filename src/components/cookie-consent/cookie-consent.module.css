@@ -1,0 +1,46 @@
+@reference "../../app/globals.css";
+
+.banner {
+  @apply fixed bottom-0 left-0 right-0 z-50 bg-white border-t border-gray-200 shadow-[0_-4px_10px_rgba(0,0,0,0.05)];
+
+  animation: slideUp 0.5s ease-out forwards;
+}
+
+.container {
+  @apply container mx-auto px-4 py-4 md:py-6;
+  @apply flex flex-col md:flex-row items-center justify-between gap-4;
+}
+
+.content {
+  @apply flex-1 text-center md:text-left;
+}
+
+.text {
+  @apply text-sm text-gray-600 leading-relaxed;
+}
+
+.text strong {
+  @apply font-bold text-gray-900;
+}
+
+.actions {
+  @apply w-full md:w-auto;
+}
+
+.button {
+  @apply w-full md:w-auto px-6 py-2.5 rounded-md font-medium text-sm transition-all;
+
+  @apply bg-slate-900 text-white hover:bg-slate-800 hover:scale-[1.02] active:scale-95 shadow-sm;
+  @apply cursor-pointer whitespace-nowrap;
+}
+
+@keyframes slideUp {
+  from {
+    transform: translateY(100%);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}

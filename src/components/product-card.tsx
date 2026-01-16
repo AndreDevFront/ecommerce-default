@@ -76,7 +76,7 @@ export function ProductCard({ product }: ProductCardProps) {
               ? "Esgotado"
               : hasReachedLimit
               ? "Limite Atingido"
-              : "Adicionar"}
+              : "Comprar agora"}
           </Button>
         </div>
       </div>

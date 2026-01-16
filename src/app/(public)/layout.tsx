@@ -1,3 +1,4 @@
+import { CookieConsent } from "@/components/cookie-consent";
 import { Footer } from "@/components/footer/footer";
 import { Header } from "@/components/header/header";
 import { ReactQueryProvider } from "@/providers/query-provider";
@@ -14,6 +15,7 @@ export default function PublicLayout({ children }: Props) {
         <Header />
         {children}
         <Footer />
+        <CookieConsent />
       </ReactQueryProvider>
     </>
   );

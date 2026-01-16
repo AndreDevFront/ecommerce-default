@@ -1,65 +1,85 @@
 @reference "../../app/globals.css";
 
 .footer {
-  @apply bg-slate-950 text-slate-200 pt-16 pb-8 mt-auto;
+  @apply bg-slate-950 text-slate-300 pt-16 pb-8 border-t border-slate-800 mt-auto;
 }
 
 .container {
-  @apply mx-auto max-w-7xl px-6;
+  @apply container mx-auto px-4;
 }
 
 .grid {
   @apply grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 mb-12;
 }
 
+.brandColumn {
+  @apply space-y-4;
+}
+
 .brand {
-  @apply text-xl font-bold text-white mb-4 block;
+  @apply text-2xl font-bold text-white block mb-2;
 }
 
 .description {
-  @apply text-slate-400 text-sm leading-relaxed mb-6;
+  @apply text-sm text-slate-400 leading-relaxed max-w-xs;
 }
 
 .socialLinks {
-  @apply flex gap-4;
+  @apply flex gap-4 pt-2;
 }
 
 .socialIcon {
-  @apply text-slate-400 hover:text-white transition-colors;
+  @apply text-slate-400 hover:text-white transition-colors hover:scale-110 transform duration-200;
 }
 
 .sectionTitle {
-  @apply text-white font-semibold mb-6;
+  @apply font-bold text-white mb-6 text-lg;
 }
 
 .list {
-  @apply space-y-4 text-sm text-slate-400;
+  @apply space-y-3;
 }
 
 .link {
-  @apply hover:text-white transition-colors block;
+  @apply text-sm text-slate-400 hover:text-blue-400 transition-colors block w-fit;
 }
 
 .contactItem {
-  @apply flex items-start gap-3;
+  @apply flex items-start gap-3 text-sm text-slate-400;
 }
 
 .icon {
-  @apply h-5 w-5 text-blue-600 shrink-0 mt-0.5;
+  @apply text-blue-500 shrink-0 mt-0.5;
 }
 
 .separator {
   @apply border-t border-slate-800 my-8;
 }
 
+.bottomSection {
+  @apply flex flex-col gap-6;
+}
+
+.legalInfo {
+  @apply text-xs text-slate-500 flex flex-col md:flex-row gap-2 md:gap-8 justify-center md:justify-start flex-wrap border-b border-slate-900 pb-6;
+}
+
+.legalInfo p {
+  @apply whitespace-nowrap;
+}
+
+.legalInfo strong {
+  @apply text-slate-400;
+}
+
 .bottomBar {
-  @apply flex flex-col md:flex-row justify-between items-center gap-4 text-sm text-slate-500;
+  @apply flex flex-col md:flex-row justify-between items-center gap-4 text-xs text-slate-500;
 }
 
 .paymentMethods {
-  @apply flex items-center gap-4;
+  @apply flex gap-3;
 }
 
-.paymentDivider {
-  @apply w-px h-4 bg-slate-700;
+.paymentBadge {
+  @apply flex items-center gap-1.5 px-3 py-1 bg-slate-900 rounded border border-slate-800 text-slate-300 font-medium;
 }

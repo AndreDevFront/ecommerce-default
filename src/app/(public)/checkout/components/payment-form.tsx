@@ -21,12 +21,10 @@ export function PaymentForm({ form }: Props) {
           name="paymentMethod"
           render={({ field }) => (
             <RadioGroup
-              // 👇 1. MUDANÇA CRÍTICA: Passamos o valor explicitamente
               onValueChange={(val) => {
-                console.log("🖱️ Cliquei em:", val); // Log para debug visual
+                console.log("🖱️ Cliquei em:", val);
                 field.onChange(val);
               }}
-              // 👇 2. MUDANÇA CRÍTICA: Usamos value, não defaultValue
               value={field.value}
               className={styles.radioGroup}
             >

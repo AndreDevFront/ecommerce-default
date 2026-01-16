@@ -53,7 +53,7 @@ export default function StoreConfigPage() {
                 subtitle: "",
                 imageUrl: "",
                 ctaText: "Ver Oferta",
-                ctaLink: "/produtos",
+                ctaLink: "/products",
               })
             }
             className={styles.addButton}

@@ -51,7 +51,7 @@ export function useStoreConfigForm() {
               subtitle: "",
               imageUrl: "",
               ctaText: "Ver Oferta",
-              ctaLink: "/produtos",
+              ctaLink: "/products",
             });
           }
         }
